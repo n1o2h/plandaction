@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Plan d'action (Manipulation des tableaux)</title>
+</head>
+<body>
+
+
+      <script>
+            /*
+      [] and new Array()
+      There is a difference if you have only one item, and it's numeric. This [] will create an array with a single item
+      but this new Array() will create an array with the length */
+      console.log("/*********** Partie 1 : Bases des tableaux ****************/");
+            let num = [10]
+            let vr= new Array(10)
+            console.log(num);
+            console.log(vr);
+            let table = new Array("aminaaa", "walide", "ali", "nouhaila", "mohamed");
+            console.log(table);
+            console.log(`Créer un tableau de 5 noms: \n  ${table}`);
+            console.log(`Afficher le premier element : ${table[0]} \n Afficher le  dernier élément.: ${table[4]}`);
+            table[0] = "nouhaila";
+            console.log(`Remplacer  le premier element par "nohaila" : \n${table[0]}`);
+      console.log("/*********** Partie 2 : Méthodes simples (push, pop, shift, unshift) ****************/");
+      table.push("iyad");
+      console.log(`tableau apres l'ajout d'element a la fin: \n  ${table}`);
+      table.unshift("iyad");
+      console.log(`tableau apres l'ajout d'element au debut: \n  ${table}`);
+      table.pop("iyad");
+      console.log(`tableau apres la suppressionn d'element a la fin: \n  ${table}`);
+      table.shift("iyad");
+      console.log(`tableau apres la supressipn  d'element au debut : \n  ${table}`);
+      // Créer un menu où l’apprenant manipule une liste "pile" ou "file".
+
+      console.log("/*********** Partie 3 : Parcours des tableaux ****************/");
+      /*
+      Exercices
+      Parcourir et afficher un tableau.
+      Calculer la somme d’un tableau de nombres.
+      Afficher les noms de plus de 5 lettres.
+      */
+      for(let i=0; i<table.length; i++){
+            console.log(table[i]);
+      }
+      console.log("***** for *********");
+      for(let i of table){
+            console.log(i);
+      }
+      console.log("*****for of*********");
+      for(let i in table){
+            console.log(table[i]);
+      }
+      console.log("*******do while *******");
+      let i=0;
+      do{
+            console.log(table[i]);
+            i++;
+      }while(i < table.length);
+      console.log("*******for *******")
+      let nombres = [9,4,5,6,7]
+      let somme = 0
+      for(let i of nombres){
+            somme += i;
+      }
+      console.log("sommen: ",somme);
+      console.log("******** for ******");
+      for(let name of table){
+            if(name.length >= 6)
+                  console.log(name);
+      }
+
+      console.log("/*********** Partie 4 : Rechercher dans un tableau ****************/");
+      console.log(table.find(e => e == "ali"));
+      console.log(table.findIndex(e => e == "ali"));
+      console.log(table.includes("ali"));
+      console.log(nombres.find(e => e%2 == 0));
+      console.log(table.find(e => e == "ali"));
+
+      let joueurs = [
+            {id:1,
+            nom:"nouha"
+            },
+            {id:2,
+            nom:"ali"
+            },
+            {id:3,
+            nom:"walid"
+            }
+      ]
+      // for(let joueur of joueurs){
+      //       joueur.find()
+      // }
+      console.log(joueurs.find(joueur => joueur.id == 3))
+      
+      console.log("/*********** Partie 5 : Filtrer un tableau ****************/");
+      let nbr = [1, 2, 4, 10, 20, 30, 23, 0];
+      console.log(nbr.filter(n => n>=10));
+
+      let etudiants = [
+            {moyene: 10,
+            nom:"nouha",
+            post: "it"
+            },
+            {moyene: 20,
+            nom:"ali",
+            post: "marketing"
+            },
+            {moyene: 16,
+            nom:"walid",
+            post: "netoyagge"
+            },
+            {moyene: 16,
+            nom:"walid",
+            post: "aetoyagge"
+            }
+      ]
+      console.log(etudiants.filter(etd => etd.moyene >= 12));
+      console.log(etudiants.filter(etd => etd.post === "netoyagge"));
+
+      console.log("/*********** Partie 6 : Transformer un tableau ****************/");
+      console.log(nbr);
+      console.log(nbr.map(n => n*2))
+      console.log(nbr);
+      console.log(etudiants.map(etd => etd.nom));
+      etudiants.map(etd =>{
+            etd.isActive = true;
+            console.log(etd)
+      });
+      console.log(etudiants);
+
+      console.log("/*********** Partie 7 : Trier et ordonner un tableau ****************/");
+      console.log(nbr.sort());
+      console.log(nbr.sort((a,b) => a-b)); //croissant
+      console.log(nbr.sort((a,b) => b-a)); //decroissant
+      function sortArray(x, y){
+            if(x.post < y.post)
+                  return -1;
+            if(x.post > y.post)
+                  return 1;
+            return 0;
+      }
+      var s = etudiants.sort(sortArray);
+      console.log(s);
+      // console.log(etudiants.sort((a,b) => a-b));
+      console.log("/*********** Partie 8 : Mise à jour et suppression dans un tableau d'objets ****************/");
+      /*
+      Exercices
+      Modifier un étudiant dans une liste par son id.
+      Supprimer un joueur avec filter().
+      Incrémenter l’âge de chaque personne.
+      */
+      nbr[0] = 1200;
+      console.log(nbr);
+      console.log(joueurs)
+
+      joueurs = joueurs.filter(joueur => joueur.id > 1)
+      console.log(joueurs)
+      
+      joueur = joueurs.map(joueur => {
+            joueur.id += 1;
+      })
+      console.log(joueurs);
+
+      console.log("/*********** Partie 9 : Mini projet : CRUD en tableau ****************/");
+
+
+
+
+
+      
+
+
+
+      
+
+
+
+      </script>
+      
+</body>
+</html>
