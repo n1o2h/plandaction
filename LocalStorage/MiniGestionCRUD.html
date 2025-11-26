@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Mini gestion CRUD (console)</title>
+      <style>
+            .container{
+                  color: white;
+                  width: 600px;
+                  height: 300px;
+                  background: #314a38b9;
+                  padding: 20px;
+            }
+            .container form{
+                  width: 100%;
+                  height: 100%;
+                  display: flex;
+                  /* flex-direction: column; */
+                  align-items: center;
+                  justify-content: center;
+            }
+            .container form fieldset{
+                  width: 90%;
+                  height: 90%;
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  justify-content: space-around;
+            }
+            .container form fieldset div{
+                  width: 90%;
+                  border: 1px solid #ff03;
+                  padding: 20px;
+                  border-radius: 16px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+            }
+            .container form fieldset div label{
+                  width: 30%;
+            }
+            .container form fieldset div input{
+                  width: 60%;
+                  height: 100%;
+                  border-radius: 10px;
+                  outline: none;
+                  border: 1px solid #ffffff50;
+                  padding: 5px;
+                  background: #6a7c6f;
+                  color: white;
+            }
+            .container form fieldset div input::placeholder{
+                  color: white;
+            }
+            .container form fieldset div button{
+                  width: 100%;
+                  height: 100%;
+                  padding: 10px;
+
+
+            }
+            #playerContainer{
+                  width: 100%;
+                  display: flex;
+                  flex-direction: column;
+                  gap: 20px;
+            }
+            .card{
+                  width: 50%;
+                  color: white;
+                  border: 1px solid #6487b6;
+                  background: #6487b6;
+                  border-radius: 16px;
+                  padding: 20px;
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+            }
+            .supprimerBtn{
+                  width: 30%;
+                  padding: 10px;
+                  border-radius: 10px;
+                  border: none;
+
+            }
+      </style>
+</head>
+<body>
+      <div class="container">
+            <form  name="addPlayer">
+                  <fieldset>Ajouter un joueur
+                  <div>
+                        <label for="nomInput">Nom</label>
+                        <input type="text"  placeholder="Entrer votre nom" name="nomInput" id="nomInput">
+                  </div>
+                  <div>
+                        <label for="ageInput">Age</label>
+                        <input type="number" min="1" max="100"  placeholder="Entrer votre age" name="ageInput">
+                  </div>
+                  <div>
+                        <button type="submit" id="">ajouter</button>
+                        <button type="reset">annuler</button>
+                  </div>
+                  </fieldset>
+            </form>
+      </div>
+
+      <div>
+            <h1>les joueurs</h1>
+            <div id="playerContainer">
+            </div>
+      </div>
+      <script>
+      /*
+      Partie 4 :  Mini gestion CRUD (console)
+      Exercice
+      Créer un tableau players dans LocalStorage :
+      Ajouter un joueur
+      Supprimer un joueur par ID
+      Modifier un joueur
+      Afficher tous les joueurs
+      */
+      /*
+      Partie 5 :  DOM : lecture/écriture
+      Exercice
+      Créer une petite interface :
+      Formulaire (nom + âge)
+      Bouton "ajouter"
+      Affichage de la liste depuis LocalStorage
+      */
+      /*
+      Partie 6 : Mise à jour dynamique
+      Exercice
+      Ajouter un bouton "Supprimer" à chaque élément.
+      Après suppression → rafraîchir la liste sans recharger la page.
+      */
+      /*
+      Partie 7 : Validation et sécurisation
+      Exercice
+      Créer une fonction sécurisée :
+      function loadLocal(key) {
+      return JSON.parse(localStorage.getItem(key)) || [];
+      }
+      */
+      function loadData(){
+            let playerList = getDataFromLocalStorageIfExist("players");
+            renderCardPlayers(playerList);
+      }
+
+      function getDataFromLocalStorageIfExist(key){
+            let dataLocalStorage = localStorage.getItem(key);
+            return dataLocalStorage ? JSON.parse(dataLocalStorage) : [];
+      }
+
+      function sauvegarderDataToLocalStorage(key, dataList){
+            localStorage.setItem(key, JSON.stringify(dataList));
+      }
+
+      let lastId = 0;
+      function generateId(){
+            let playerList = getDataFromLocalStorageIfExist("players");
+            if(playerList.length === 0) return 1;
+            return playerList[playerList.length -1].id + 1;
+      }
+
+      function addPlayer(nom, age){
+            let playerList = getDataFromLocalStorageIfExist("players");
+            let id= generateId();
+            let player = {
+                  id: id,
+                  nom: nom,
+                  age: age
+            } 
+            playerList.push(player);
+            renderCardPlayers(playerList);
+            sauvegarderDataToLocalStorage("players", playerList);
+
+      }
+
+      function delatePlayerById(id){
+            let playerList = getDataFromLocalStorageIfExist("players");
+            playerid = playerList.findIndex(player => player.id == id)
+            if(playerid == -1){
+                  console.log("player not existe!")
+            }
+            playerList.splice(playerid, 1);
+            sauvegarderDataToLocalStorage("players", playerList);
+            renderCardPlayers(playerList);
+      }
+
+      function updatePlayer(id, nom, age){
+            let playerList = getDataFromLocalStorageIfExist("players");
+            playerUpdated = playerList.find(player => player.id == id)
+            playerUpdated.nom = nom;
+            playerUpdated.age = age;
+            sauvegarderDataToLocalStorage("players", playerList);
+      }
+      
+      function showPlayers(){
+      let playerList = getDataFromLocalStorageIfExist("players");
+      if(playerList.length){
+            console.log(`playerList: \n`)
+            playerList.forEach(player =>{
+            console.log(`player : ${player.id}\t${player.nom} \t ${player.age} \n`);
+      })
+      }else{
+            console.log(`playerList is empty`);
+      }
+}
+
+      function formAjout(){
+      document.forms["addPlayer"].addEventListener("submit", (event) => {
+            event.preventDefault();
+            let form = event.target;
+            addPlayer(form.nomInput.value, form.ageInput.value);
+      });
+      }
+
+function  renderCardPlayers(playerList){
+      document.getElementById("playerContainer").innerHTML = renderListPlayers(playerList);
+      document.querySelectorAll(".supprimerBtn").forEach(btn => {
+            btn.addEventListener("click", () =>{
+                  let idPlayer=btn.getAttribute("data-index");
+                  delatePlayerById(idPlayer);
+            })
+      })
+}
+
+function renderListPlayers(playersList){
+      let cardPlayer = "";
+      playersList.map(player =>{
+            cardPlayer += renderPlayer(player);
+      })
+      return cardPlayer;
+}
+
+function renderPlayer(player){
+      return `
+            <div class="card" type="button" >
+                  <h2>${player.id}</h2>
+                  <h2>${player.nom}</h2>
+                  <h2>${player.age}</h2>
+                  <button class="supprimerBtn" data-index=${player.id}>Supprimer</button>
+            </div>
+            `
+}
+
+function initApp(){
+            let playerList= getDataFromLocalStorageIfExist("players");
+            loadData();
+            formAjout();
+      }
+      initApp();
+
+      </script>
+      
+</body>
+</html>

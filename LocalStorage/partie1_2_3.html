@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Plan d'action sur localStorage</title>
+</head>
+<body>
+<script>
+      /*
+      Exercices
+      Afficher localStorage dans la console.
+      Faire un setItem("name", "Ali") et getItem("name").
+      */
+      console.log(localStorage);
+      /*
+      Storage {length: 0}
+      length: 0
+      [[Prototype]]: Storage
+      */
+      localStorage.setItem("name", "Ali");
+      
+      localStorage.getItem("name");
+      console.log(localStorage.getItem("name")); // Ali
+
+      /*
+      Exercices
+      Ajouter, afficher et supprimer une donnée simple.
+      Lister toutes les clés présentes.
+      */
+      localStorage.setItem("name", "walid");
+      localStorage.setItem("name", "mohammed");
+      localStorage.setItem("name", "nohaila");
+      localStorage.getItem("name");
+      console.log(localStorage.getItem("name"))
+      console.log(localStorage.key(0))
+
+      /*
+      Exercices
+      Stocker un objet {id:1, name:"Salah"}
+      Stocker un tableau de 3 objets joueurs.
+      Modifier un objet dans le tableau puis le sauvegarder.
+      */
+      console.log("/******* JSON ******/");
+      
+      let obj = {
+            id: 1,
+            name: "Salah"
+      }
+      localStorage.setItem("joueur", JSON.stringify(obj));
+      console.log(localStorage.getItem("joueur"));
+      let objArray = [
+      {
+      "id": 1,
+      "name": "WALID"
+      },
+      {
+      "id": 2,
+      "name": "Salah"
+      },
+      {
+      "id": 3,
+      "name": "ali"
+      }
+]
+localStorage.setItem("joueurs", JSON.stringify(objArray));
+console.log(localStorage.getItem("joueurs"));
+objArray[1].id=4;
+console.log(objArray[1].id);
+localStorage.setItem("joueurs", JSON.stringify(objArray));
+console.log(localStorage.getItem("joueurs"));
+
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
