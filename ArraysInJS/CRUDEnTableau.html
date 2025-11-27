@@ -11,7 +11,7 @@
 
 <body>
       <div class="container mt-5">
-            <form name="AjoutProduit">
+            <form name="AjoutProduit" id="AjoutProduit">
                   <legend class="mb-3">Ajouter un produit</legend>
                   <div class="mb-3">
                         <label for="nomProduit" class="form-label">Nom du produit</label>
@@ -25,10 +25,9 @@
                         <label for="stockProduit" class="form-label">Stock du produit</label>
                         <input type="number" min="0" class="form-control" id="stockProduit" name="stockProduit">
                   </div>
-                  <button type="submit" class="btn btn-success">Ajouter</button>
+                  <button type="submit" class="btn btn-success" id="submitBtn">Ajouter</button>
                   <button type="reset" class="btn btn-primary">Annuler</button>
             </form>
-
             <hr>
             <hr>
 
@@ -40,13 +39,6 @@
                         <th>STOCK</th>
                   </thead>
                   <tbody id="containerProduit">
-                        <tr>
-                              <td>id</td>
-                              <td>nom</td>
-                              <td>prix</td>
-                              <td>stock</td>
-
-                        </tr>
                   </tbody>
 
 
